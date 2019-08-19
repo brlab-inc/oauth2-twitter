@@ -2,47 +2,27 @@
 
 namespace BRlab\OAuth2\Client\Provider;
 
+use League\OAuth2\Client\Provider\ResourceOwnerInterface;
+
 /**
  * @property array $response
  * @property string $resourceOwnerId
  */
-class TwitterResourceOwner extends GenericResourceOwner
+class TwitterResourceOwner implements ResourceOwnerInterface
 {
     /**
-     * Domain
-     *
-     * @var string
+     * @var array
      */
-    protected $domain;
+    protected $response;
 
     /**
-     * Get resource owner email
+     * TwitterResourceOwner constructor.
      *
-     * @return string
+     * @param array $response
      */
-    public function getEmail()
+    public function __construct(array $response = [])
     {
-        return $this->response['email'] ?: null;
-    }
-
-    /**
-     * Get resource owner name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->response['name'] ?: null;
-    }
-
-    /**
-     * Get resource owner nickname
-     *
-     * @return string
-     */
-    public function getNickname()
-    {
-        return $this->response['login'] ?: null;
+        $this->response = $response;
     }
 
     /**
@@ -52,7 +32,37 @@ class TwitterResourceOwner extends GenericResourceOwner
      */
     public function getId()
     {
-        return $this->resourceOwnerId;
+        return $this->getResource('id_str');
+    }
+
+    /**
+     * Get resource owner email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->getResource('email');
+    }
+
+    /**
+     * Get resource owner name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getResource('name');
+    }
+
+    /**
+     * Get resource owner nickname
+     *
+     * @return string
+     */
+    public function getNickname()
+    {
+        return $this->getResource('screen_name');
     }
 
     /**
@@ -62,20 +72,19 @@ class TwitterResourceOwner extends GenericResourceOwner
      */
     public function getUrl()
     {
-        return trim($this->domain . '/' . $this->getNickname()) ?: null;
+        return $this->getResource('url');
+    }
+
+    protected function getResource($name)
+    {
+        return isset($this->response[$name]) ? $this->response[$name] : null;
     }
 
     /**
-     * Set resource owner domain
-     *
-     * @param string $domain
-     *
-     * @return ResourceOwner
+     * @return array
      */
-    public function setDomain($domain)
+    public function toArray()
     {
-        $this->domain = $domain;
-
-        return $this;
+        return $this->response;
     }
 }
