@@ -1,4 +1,6 @@
-<?php namespace League\OAuth2\Client\Provider;
+<?php
+
+namespace BRlab\OAuth2\Client\Provider;
 
 /**
  * @property array $response
@@ -60,13 +62,13 @@ class TwitterResourceOwner extends GenericResourceOwner
      */
     public function getUrl()
     {
-        return trim($this->domain.'/'.$this->getNickname()) ?: null;
+        return trim($this->domain . '/' . $this->getNickname()) ?: null;
     }
 
     /**
      * Set resource owner domain
      *
-     * @param  string $domain
+     * @param string $domain
      *
      * @return ResourceOwner
      */
