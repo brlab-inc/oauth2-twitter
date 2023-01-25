@@ -13,12 +13,12 @@ This package provides Twitter OAuth 2.0 support for the PHP League's [OAuth 2.0 
 To install, use composer:
 
 ```
-composer require league/oauth2-twitter
+composer require brlab-inc/oauth2-twitter
 ```
 
 ## Usage
 
-Usage is the same as The League's OAuth client, using `\League\OAuth2\Client\Provider\Twitter` as the provider.
+Usage is the same as The League's OAuth client, using `\BRlab\OAuth2\Client\Provider\Twitter` as the provider.
 
 <!--
 
